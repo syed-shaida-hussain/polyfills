@@ -53,3 +53,40 @@ Function.prototype.myBind = function(object = {} , ...args){
 
 const bindResult = printFullName.myBind(obj , "Srinagar");
 bindResult("j&k")
+
+// Polyfill for Flat method
+
+Array.prototype.myFlat = function (depth=1) {
+    let flattenedArray = [];
+    if(!Array.isArray(this)) {
+        throw new Error(`${this}.myFlat is not a function`)
+    }
+    this.forEach(el => {
+        if(Array.isArray(el) && depth > 0){
+            flattenedArray.push(...el.myFlat(depth-1))
+        } else{
+            flattenedArray.push(el)
+        }
+    })
+    return flattenedArray;
+}
+
+const array = [1,2,3,[[4,5]]];
+console.log(array.myFlat(2));
+
+// My custom flat function
+
+function customFlat (arr , depth=1){
+    let flatArray = [];
+    for(let i=0; i<arr.length; i++){
+        if(Array.isArray(arr[i]) && depth > 0){
+            let res = customFlat(arr[i] , depth-1)
+            flatArray = [...flatArray , ...res]
+        } else {
+            flatArray = [...flatArray,arr[i]]
+        }
+    }
+    return flatArray
+}
+
+console.log(customFlat(array,2))
