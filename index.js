@@ -35,7 +35,10 @@ Function.prototype.myApply = function(object={} , args = []) {
     object.fn(...args);
 }
 
-printFullName.myApply(obj , ["srinagar" , "j&k"])
+printFullName.myApply(obj , ["srinagar" , "j&k"]);
+
+// Polyfill for bind method
+
 
 Function.prototype.myBind = function(object = {} , ...args){
     if(typeof this !== "function") {
